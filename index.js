@@ -59,7 +59,7 @@ function counter2() {
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
 function inning(){
-    let score = Math.round(Math.random() * 2);
+    let score = Math.round(Math.random()* 2);
     return score;
 
 }
@@ -129,40 +129,44 @@ Final Score: 6 - 10 */
 
 
 
-/* function scoreboard(cb, numOfInnings) {
-  let breaks = [{'1st inning': '0 - 2'},
-  {'2nd inning': '1 - 3'},
-  {'3rd inning': '1 - 3'},
-  {'4th inning': '2 - 4'},
-  {'5th inning': '4 - 6'},
-  {'6th inning': '4 - 6'},
-  {'7th inning': '4 - 6'},
-  {'8th inning': '5 - 8'},
-  {'9th inning': '6 - 10'},
-  {'Final Score': '6-10'}]
-  for (let i = 0; i < breaks.length; i++){
-  }
-  console.log(breaks);
-}
-
-scoreboard(inning(), 9) */
-
-function scoreBoard(cb, numOfInnings){
+function scoreBoard(callBack, numOfInnings){
   let home = 0;
   let away = 0;
-  let num = 0;
+  let ending
   
-  for (let i = 0; i < numOfInnings; i++){
-    home = inning() + home;
-    away = inning() + away;
-    num = i+1
-    let teamScores = ` The ${num}th inning: ${home} - ${away}`;
-    console.log(teamScores)
-    
+  for (let i = 1; i <= numOfInnings; i++){
+    home += callBack();
+    away += callBack();
+    if (i === 1){
+      ending = 'st';
+    } else if (i === 2){
+      ending = 'nd';
+    } else if (i === 3){
+      ending = 'rd'
+    } else {
+      ending = 'th'
+    }
+    console.log(`${i}${ending} inning: ${home} - ${away}`);
   }
 
-  let finalScore = `Final Score: ${home} - ${away}`; 
+  let finalScore = `Final Score: home: ${home} away: ${away}`; 
   return finalScore;
 }
 
-console.log(scoreBoard(inning(), 9));
+console.log(scoreBoard(inning, 9));
+
+function personalDice(name){
+  return function(){
+      // generate random number between 1 and 6
+    const newRoll = Math.floor(Math.random() * 6);
+    console.log(`${name} rolled a ${newRoll}`)
+  }
+}
+
+const dansRoll = personalDice("Dan");
+
+const zoesRoll = personalDice("Zoe");
+
+
+dansRoll();
+dansRoll();
